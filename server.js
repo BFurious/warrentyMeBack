@@ -14,8 +14,10 @@ const server = http.createServer(app); // Create HTTP server
 // Middleware
 app.use(
   cors({
-    origin: envVariables.FRONTEND_URL, // Replace with your frontend URL
-    credentials: true, // Allow credentials (cookies)
+    origin: "*", // Allow all origins for specific put this ["https://example-frontend.com", "https://another-trusted-domain.com"],
+    credentials: true, // Allow cookies
+    allowedHeaders: ["Content-Type", "Authorization"],
+    methods: ["GET", "POST", "PUT", "DELETE"]
   })
 );
 app.use(express.json());
