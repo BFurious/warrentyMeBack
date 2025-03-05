@@ -11,8 +11,10 @@
       "src": "/(.*)",
       "dest": "server.js",
       "headers": {
-        "Access-Control-Allow-Origin": "https://warrentymfrontend.netlify.app",
-        "Access-Control-Allow-Credentials": "true"
+        "Access-Control-Allow-Origin": ["http://localhost:5173","https://warrentymfrontend.netlify.app", "https://warrenty-me-front.vercel.app" ],
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization"
       }
     }
   ]
