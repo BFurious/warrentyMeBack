@@ -85,16 +85,14 @@ router.get("/google/callback",
         secure: envVariables.NODE_ENV === 'production',
         sameSite: envVariables.NODE_ENV === "production" ? "None" : "Lax",
         maxAge: 24 * 60 * 60 * 1000, // 1 day
-        // domain: envVariables.NODE_ENV === "production" ? "https://warrenty-me-back.vercel.app" : undefined,
-        path: "/", 
+        path: "/",
       })
       .cookie("refreshToken", refreshToken, {
         httpOnly: true,
         secure: envVariables.NODE_ENV === 'production',
         sameSite: envVariables.NODE_ENV === "production" ? "None" : "Lax",
         maxAge: 24 * 60 * 60 * 1000, // 1 day
-        // domain: envVariables.NODE_ENV === "production" ? "https://warrenty-me-back.vercel.app" : undefined,
-        path: "/", 
+        path: "/",
       })
       .send(`
       <!DOCTYPE html>
@@ -121,8 +119,8 @@ router.get("/google/callback",
   }
 );
 
-router.post("/check-auth", authenticateMiddleware, (req, res) => {
-  res.json({ message: "Authenticated" });
+router.get("/check-auth", authenticateMiddleware, (req, res) => {
+  res.status(200).json({ message: "Authenticated" });
 });
 
 // Refresh Token Endpoint
@@ -149,24 +147,25 @@ router.post("/refresh-token", (req, res) => {
 
     // Send the new access token
     res
-      .cookie("accessToken", accessToken, { httpOnly: true, secure: envVariables.NODE_ENV === 'production',
+      .cookie("accessToken", accessToken, {
+        httpOnly: true, secure: envVariables.NODE_ENV === 'production',
         sameSite: envVariables.NODE_ENV === "production" ? "None" : "Lax",
         maxAge: 24 * 60 * 60 * 1000, // 1 day
-        // domain: envVariables.NODE_ENV === "production" ? `https://warrenty-me-back.vercel.app` : undefined,
-        path: "/",  })
+        path: "/",
+      })
       .json({ accessToken });
   } catch (error) {
     res.status(403).json({ message: "Invalid or expired refresh token" });
   }
 });
 
-router.post("/get-token", (req, res) => {
+router.get("/get-token", (req, res) => {
   const { accessToken, refreshToken } = req.cookies; // Read the httpOnly cookie
   res.json({ accessToken, refreshToken });
 });
 
 // Logout Route
-router.post("/logout", (req, res) => {
+router.get("/logout", (req, res) => {
   const refreshToken = req.cookies.refreshToken;
 
   if (refreshToken) {

@@ -11,13 +11,13 @@ import http from "http";
 const app = express();
 const server = http.createServer(app); // Create HTTP server
 
+const allowdedOrigins = ["http://localhost:5173","https://warrentymfrontend.netlify.app/", "https://warrenty-me-front.vercel.app/" ]
+
 // Middleware
 app.use(
   cors({
-    origin: "*", // Allow all origins for specific put this ["https://example-frontend.com", "https://another-trusted-domain.com"],
+    origin: allowdedOrigins, 
     credentials: true, // Allow cookies
-    allowedHeaders: ["Content-Type", "Authorization"],
-    methods: ["GET", "POST", "PUT", "DELETE"]
   })
 );
 app.use(express.json());
