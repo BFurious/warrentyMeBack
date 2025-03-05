@@ -11,7 +11,7 @@ import http from "http";
 const app = express();
 const server = http.createServer(app); // Create HTTP server
 
-const allowdedOrigins = ["http://localhost:5173","https://warrentymfrontend.netlify.app/", "https://warrenty-me-front.vercel.app/" ]
+const allowdedOrigins = ["http://localhost:5173","https://warrentymfrontend.netlify.app", "https://warrenty-me-front.vercel.app" ]
 
 // Middleware
 app.use(
