@@ -81,14 +81,14 @@ router.get("/google/callback",
     // Set cookies or send tokens in response
     res
       .cookie("accessToken", accessToken, {
-        httpOnly: true,
+
         secure: envVariables.NODE_ENV === 'production',
         sameSite: envVariables.NODE_ENV === "production" ? "None" : "Lax",
         maxAge: 24 * 60 * 60 * 1000, // 1 day
         path: "/",
       })
       .cookie("refreshToken", refreshToken, {
-        httpOnly: true,
+
         secure: envVariables.NODE_ENV === 'production',
         sameSite: envVariables.NODE_ENV === "production" ? "None" : "Lax",
         maxAge: 24 * 60 * 60 * 1000, // 1 day
