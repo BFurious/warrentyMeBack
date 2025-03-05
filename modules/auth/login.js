@@ -121,7 +121,7 @@ router.get("/google/callback",
   }
 );
 
-router.get("/check-auth", authenticateMiddleware, (req, res) => {
+router.post("/check-auth", authenticateMiddleware, (req, res) => {
   res.json({ message: "Authenticated" });
 });
 
@@ -160,13 +160,13 @@ router.post("/refresh-token", (req, res) => {
   }
 });
 
-router.get("/get-token", (req, res) => {
+router.post("/get-token", (req, res) => {
   const { accessToken, refreshToken } = req.cookies; // Read the httpOnly cookie
   res.json({ accessToken, refreshToken });
 });
 
 // Logout Route
-router.get("/logout", (req, res) => {
+router.post("/logout", (req, res) => {
   const refreshToken = req.cookies.refreshToken;
 
   if (refreshToken) {
