@@ -85,7 +85,7 @@ router.get("/google/callback",
         secure: envVariables.NODE_ENV === 'production',
         sameSite: envVariables.NODE_ENV === "production" ? "None" : "Lax",
         maxAge: 24 * 60 * 60 * 1000, // 1 day
-        domain: envVariables.NODE_ENV === "production" ? `${envVariables.FRONTEND_URL}` : undefined,
+        domain: envVariables.NODE_ENV === "production" ? `https://warrenty-me-back.vercel.app` : undefined,
         path: "/", 
       })
       .cookie("refreshToken", refreshToken, {
@@ -93,7 +93,7 @@ router.get("/google/callback",
         secure: envVariables.NODE_ENV === 'production',
         sameSite: envVariables.NODE_ENV === "production" ? "None" : "Lax",
         maxAge: 24 * 60 * 60 * 1000, // 1 day
-        domain: envVariables.NODE_ENV === "production" ? `${envVariables.FRONTEND_URL}` : undefined,
+        domain: envVariables.NODE_ENV === "production" ? `https://warrenty-me-back.vercel.app` : undefined,
         path: "/", 
       })
       .send(`
@@ -152,7 +152,7 @@ router.post("/refresh-token", (req, res) => {
       .cookie("accessToken", accessToken, { httpOnly: true, secure: envVariables.NODE_ENV === 'production',
         sameSite: envVariables.NODE_ENV === "production" ? "None" : "Lax",
         maxAge: 24 * 60 * 60 * 1000, // 1 day
-        domain: envVariables.NODE_ENV === "production" ? `${envVariables.FRONTEND_URL}` : undefined,
+        domain: envVariables.NODE_ENV === "production" ? `https://warrenty-me-back.vercel.app` : undefined,
         path: "/",  })
       .json({ accessToken });
   } catch (error) {
