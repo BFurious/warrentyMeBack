@@ -80,8 +80,18 @@ router.get("/google/callback",
 
     // Set cookies or send tokens in response
     res
-      .cookie("accessToken", accessToken, { httpOnly: true, secure: process.env.NODE_ENV === 'production' })
-      .cookie("refreshToken", refreshToken, { httpOnly: true, secure: process.env.NODE_ENV === 'production' })
+      .cookie("accessToken", accessToken, {
+        httpOnly: true,
+        secure: envVariables.NODE_ENV === 'production',
+        sameSite: "None",
+        maxAge: 60 * 60 * 1000
+      })
+      .cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: envVariables.NODE_ENV === 'production',
+        sameSite: "None",
+        maxAge: 60 * 60 * 1000
+      })
       .send(`
       <!DOCTYPE html>
       <html>
@@ -135,7 +145,7 @@ router.post("/refresh-token", (req, res) => {
 
     // Send the new access token
     res
-      .cookie("accessToken", accessToken, { httpOnly: true, secure: process.env.NODE_ENV === 'production' })
+      .cookie("accessToken", accessToken, { httpOnly: true, secure: envVariables.NODE_ENV === 'production' })
       .json({ accessToken });
   } catch (error) {
     res.status(403).json({ message: "Invalid or expired refresh token" });
