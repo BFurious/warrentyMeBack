@@ -83,14 +83,18 @@ router.get("/google/callback",
       .cookie("accessToken", accessToken, {
         httpOnly: true,
         secure: envVariables.NODE_ENV === 'production',
-        sameSite: "None",
-        maxAge: 60 * 60 * 1000
+        sameSite: envVariables.NODE_ENV === "production" ? "None" : "Lax",
+        maxAge: 24 * 60 * 60 * 1000, // 1 day
+        domain: envVariables.NODE_ENV === "production" ? `${envVariables.FRONTEND_URL}` : undefined,
+        path: "/", 
       })
       .cookie("refreshToken", refreshToken, {
         httpOnly: true,
         secure: envVariables.NODE_ENV === 'production',
-        sameSite: "None",
-        maxAge: 60 * 60 * 1000
+        sameSite: envVariables.NODE_ENV === "production" ? "None" : "Lax",
+        maxAge: 24 * 60 * 60 * 1000, // 1 day
+        domain: envVariables.NODE_ENV === "production" ? `${envVariables.FRONTEND_URL}` : undefined,
+        path: "/", 
       })
       .send(`
       <!DOCTYPE html>
@@ -145,7 +149,11 @@ router.post("/refresh-token", (req, res) => {
 
     // Send the new access token
     res
-      .cookie("accessToken", accessToken, { httpOnly: true, secure: envVariables.NODE_ENV === 'production' })
+      .cookie("accessToken", accessToken, { httpOnly: true, secure: envVariables.NODE_ENV === 'production',
+        sameSite: envVariables.NODE_ENV === "production" ? "None" : "Lax",
+        maxAge: 24 * 60 * 60 * 1000, // 1 day
+        domain: envVariables.NODE_ENV === "production" ? `${envVariables.FRONTEND_URL}` : undefined,
+        path: "/",  })
       .json({ accessToken });
   } catch (error) {
     res.status(403).json({ message: "Invalid or expired refresh token" });
