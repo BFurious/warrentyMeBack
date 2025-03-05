@@ -41,7 +41,7 @@ app.use(passport.session());
 // Routes
 app.use("/api", router);
 app.get("/", (req, res) => {
-  res.status(200).statusMessage(`${envVariables.API_BASE_URL}`);
+  res.status(200).json(`${envVariables.API_BASE_URL}`);
 });
 
 
